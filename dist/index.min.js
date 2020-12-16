@@ -1,5 +1,5 @@
 /*!
- * dasta.js v1.0.15
+ * dasta.js v1.0.20
  * (c) 2020- YogurtCat
  * Released under the MIT License.
  */

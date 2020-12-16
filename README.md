@@ -7,7 +7,7 @@ Dasta (刀削面, Pasta change the first letter to D) developed based on TypeScr
 ## Installation
 
 ```sh
-npm i -S dasta@1.0.15
+npm i -S dasta@1.0.20
 ```
 
 ## Usage
@@ -23,8 +23,8 @@ externals: {
 Import modules by adding tags in index.html
 
 ```HTML
-<script src="https://cdn.jsdelivr.net/npm/@yogurtcat/lib@1.0.0/dist/index.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dasta@1.0.15/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@yogurtcat/lib@1.0.1/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dasta@1.0.20/dist/index.min.js"></script>
 ```
 
 Import in TypeScript (or JavaScript)
