@@ -1,6 +1,7 @@
 /*!
- * dasta.js v1.0.20
+ * dasta.js v1.0.21
  * (c) 2020- YogurtCat
+ * git: https://github.com/YogurtCat2020/dasta
  * Released under the MIT License.
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -18,7 +19,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/CodeH.ts":
-/*!**********************!*
+/*!**********************!*\
   !*** ./src/CodeH.ts ***!
   \**********************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
@@ -67,7 +68,7 @@ Code.extension.set('H', x => new CodeH(x));
 /***/ }),
 
 /***/ "./src/Component.ts":
-/*!**************************!*
+/*!**************************!*\
   !*** ./src/Component.ts ***!
   \**************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
@@ -206,7 +207,7 @@ exports.default = Component;
 /***/ }),
 
 /***/ "./src/index.ts":
-/*!**********************!*
+/*!**********************!*\
   !*** ./src/index.ts ***!
   \**********************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
@@ -223,7 +224,7 @@ Object.defineProperty(exports, "Component", ({ enumerable: true, get: function (
 /***/ }),
 
 /***/ "@yogurtcat/lib":
-/*!*********************************!*
+/*!*********************************!*\
   !*** external "@yogurtcat/lib" ***!
   \*********************************/
 /***/ ((module) => {

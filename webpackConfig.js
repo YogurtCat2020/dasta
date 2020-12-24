@@ -1,7 +1,17 @@
 
-const license = config => `${config.name}.js v${config.version}
-(c) ${config.date} ${config.author}
-Released under the MIT License.`
+const license = config => {
+  let r = 
+    `${config.name}.js v${config.version}\n`
+    + `(c) ${config.date} ${config.author}\n`
+
+  for(let k in config.repository) {
+    let v = config.repository[k]
+    r += `${k}: ${v}\n`
+  }
+
+  r += 'Released under the MIT License.'
+  return r
+}
 
 
 const webpackConfig = ({
