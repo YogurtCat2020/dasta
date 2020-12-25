@@ -1,6 +1,6 @@
 {
   "name": "dasta",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "A package for aspect-oriented development of Vue components.",
   "repository": {
     "type": "git",

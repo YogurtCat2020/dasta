@@ -24,7 +24,7 @@ Import modules by adding tags in index.html
 
 ```HTML
 <script src="https://cdn.jsdelivr.net/npm/@yogurtcat/lib@1.0.5/dist/index.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dasta@1.0.21/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dasta@1.0.22/dist/index.min.js"></script>
 ```
 
 Import in TypeScript (or JavaScript)

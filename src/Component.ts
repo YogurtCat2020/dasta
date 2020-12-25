@@ -3,9 +3,12 @@ import {base, container, evaluate} from '@yogurtcat/lib'
 const {is, to} = base
 const {Container, Mass} = container
 
+export type Container<K, V> = container.Container<K, V>
+export type Mass = container.Mass
+
 
 export default class Component extends Container<any, any> {
-  protected readonly container: container.Mass
+  protected readonly container: Mass
   protected allow: boolean
 
   public constructor(args?: object) {
@@ -14,11 +17,11 @@ export default class Component extends Container<any, any> {
     this.allow = true
   }
 
-  protected relocate(key: any): [container.Container<any, any>, any] {
+  protected relocate(key: any): [Container<any, any>, any] {
     return [this.container, key]
   }
 
-  public merge(args: any): container.Container<any, any> {
+  public merge(args: any): Container<any, any> {
     this.container.merge(args)
     return this
   }
