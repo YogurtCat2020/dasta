@@ -3,7 +3,7 @@ module.exports = {
   author: 'YogurtCat',
   date: '2020-',
   name: 'dasta',
-  version: '1.0.22',
+  version: '1.0.24',
   repository: {
     git: 'https://github.com/YogurtCat2020/dasta'
   },
