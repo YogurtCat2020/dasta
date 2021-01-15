@@ -1,7 +1,8 @@
-import {base, container, evaluate} from '@yogurtcat/lib'
+import {base, container, code, evaluate} from '@yogurtcat/lib'
 
 const {is, to} = base
 const {Container, Mass} = container
+const {Code} = code
 
 export type Container<K, V> = container.Container<K, V>
 export type Mass = container.Mass
@@ -96,29 +97,65 @@ export default class Component extends Container<any, any> {
     return r
   }
   protected componentData(context?: any, contextName?: string): Function {
-    const data = this.container.take('data')
-    if(!to.bool(data)) return null
-    if(!['init', 'I', 'opr', 'O']
-      .map(i => to.bool(data.get(i)))
-      .reduce((s, c) => s || c, false)) return null
-    return evaluate({
-      template: `(function(){return @})`,
-      codes: [data]
-    }, context, contextName)
+    const obj = this.container.take('data')
+    return Component.funcData(obj, context, contextName)
   }
   protected componentRender(context?: any, contextName?: string): Function {
-    const render = this.container.take('render')
-    if(!to.bool(render)) return null
-    if(!['name', 'N']
-      .map(i => to.bool(render.get(i)))
-      .reduce((s, c) => s || c, false)) return null
-    return evaluate({
-      template: `(function(h){return @})`,
-      codes:[render]
-    }, context, contextName)
+    const obj = this.container.take('render')
+    return Component.funcRender(obj, context, contextName)
   }
   
   public $(...args: any[]): Component {
     return <any> super.$(...args)
+  }
+
+  protected static regData(obj: any): boolean {
+    obj = to.obj(obj)
+    if(!to.bool(obj)) return null
+    if(!['init', 'I', 'opr', 'O']
+      .map(i => to.bool(obj[i]))
+      .reduce((s, c) => s || c, false)) return null
+    return obj
+  }
+  public static funcData(obj: any, context?: any, contextName?: string): Function {
+    obj = this.regData(obj)
+    if(is.un(obj)) return null
+    return evaluate({
+      template: `(function(){return @})`,
+      codes: [obj]
+    }, context, contextName)
+  }
+  public static codeData(obj: any): string {
+    obj = this.regData(obj)
+    if(is.un(obj)) return null
+    return Code.new({
+      template: `(function(){return @})`,
+      codes: [obj]
+    }).code
+  }
+
+  protected static regRender(obj: any): boolean {
+    obj = to.obj(obj)
+    if(!to.bool(obj)) return null
+    if(!['name', 'N']
+      .map(i => to.bool(obj[i]))
+      .reduce((s, c) => s || c, false)) return null
+    return obj
+  }
+  public static funcRender(obj: any, context?: any, contextName?: string): Function {
+    obj = this.regRender(obj)
+    if(is.un(obj)) return null
+    return evaluate({
+      template: `(function(h){return @})`,
+      codes: [obj]
+    }, context, contextName)
+  }
+  public static codeRender(obj: any): string {
+    obj = this.regRender(obj)
+    if(is.un(obj)) return null
+    return Code.new({
+      template: `(function(h){return @})`,
+      codes: [obj]
+    }).code
   }
 }

@@ -23,8 +23,8 @@ externals: {
 Import modules by adding tags in index.html
 
 ```HTML
-<script src="https://cdn.jsdelivr.net/npm/@yogurtcat/lib@1.0.6/dist/index.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dasta@1.0.24/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@yogurtcat/lib@1.0.10/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dasta@1.0.30/dist/index.min.js"></script>
 ```
 
 Import in TypeScript (or JavaScript)

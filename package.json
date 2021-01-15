@@ -1,6 +1,6 @@
 {
   "name": "dasta",
-  "version": "1.0.24",
+  "version": "1.0.30",
   "description": "A package for aspect-oriented development of Vue components.",
   "repository": {
     "type": "git",
@@ -30,6 +30,6 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
-    "@yogurtcat/lib": "^1.0.6"
+    "@yogurtcat/lib": "^1.0.10"
   }
 }

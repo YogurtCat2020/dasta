@@ -1,5 +1,5 @@
 /*!
- * dasta.js v1.0.24
+ * dasta.js v1.0.30
  * (c) 2020- YogurtCat
  * git: https://github.com/YogurtCat2020/dasta
  * Released under the MIT License.
@@ -78,6 +78,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const lib_1 = __webpack_require__(/*! @yogurtcat/lib */ "@yogurtcat/lib");
 const { is, to } = lib_1.base;
 const { Container, Mass } = lib_1.container;
+const { Code } = lib_1.code;
 class Component extends Container {
     constructor(args) {
         super();
@@ -172,33 +173,71 @@ class Component extends Container {
         return r;
     }
     componentData(context, contextName) {
-        const data = this.container.take('data');
-        if (!to.bool(data))
-            return null;
-        if (!['init', 'I', 'opr', 'O']
-            .map(i => to.bool(data.get(i)))
-            .reduce((s, c) => s || c, false))
-            return null;
-        return lib_1.evaluate({
-            template: `(function(){return @})`,
-            codes: [data]
-        }, context, contextName);
+        const obj = this.container.take('data');
+        return Component.funcData(obj, context, contextName);
     }
     componentRender(context, contextName) {
-        const render = this.container.take('render');
-        if (!to.bool(render))
-            return null;
-        if (!['name', 'N']
-            .map(i => to.bool(render.get(i)))
-            .reduce((s, c) => s || c, false))
-            return null;
-        return lib_1.evaluate({
-            template: `(function(h){return @})`,
-            codes: [render]
-        }, context, contextName);
+        const obj = this.container.take('render');
+        return Component.funcRender(obj, context, contextName);
     }
     $(...args) {
         return super.$(...args);
+    }
+    static regData(obj) {
+        obj = to.obj(obj);
+        if (!to.bool(obj))
+            return null;
+        if (!['init', 'I', 'opr', 'O']
+            .map(i => to.bool(obj[i]))
+            .reduce((s, c) => s || c, false))
+            return null;
+        return obj;
+    }
+    static funcData(obj, context, contextName) {
+        obj = this.regData(obj);
+        if (is.un(obj))
+            return null;
+        return lib_1.evaluate({
+            template: `(function(){return @})`,
+            codes: [obj]
+        }, context, contextName);
+    }
+    static codeData(obj) {
+        obj = this.regData(obj);
+        if (is.un(obj))
+            return null;
+        return Code.new({
+            template: `(function(){return @})`,
+            codes: [obj]
+        }).code;
+    }
+    static regRender(obj) {
+        obj = to.obj(obj);
+        if (!to.bool(obj))
+            return null;
+        if (!['name', 'N']
+            .map(i => to.bool(obj[i]))
+            .reduce((s, c) => s || c, false))
+            return null;
+        return obj;
+    }
+    static funcRender(obj, context, contextName) {
+        obj = this.regRender(obj);
+        if (is.un(obj))
+            return null;
+        return lib_1.evaluate({
+            template: `(function(h){return @})`,
+            codes: [obj]
+        }, context, contextName);
+    }
+    static codeRender(obj) {
+        obj = this.regRender(obj);
+        if (is.un(obj))
+            return null;
+        return Code.new({
+            template: `(function(h){return @})`,
+            codes: [obj]
+        }).code;
     }
 }
 exports.default = Component;
