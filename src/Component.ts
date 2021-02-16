@@ -1,11 +1,4 @@
-import {base, container, code, evaluate} from '@yogurtcat/lib'
-
-const {is, to} = base
-const {Container, Mass} = container
-const {Code} = code
-
-export type Container<K, V> = container.Container<K, V>
-export type Mass = container.Mass
+import {is, to, Container, Mass, Code, evaluate} from '@yogurtcat/lib'
 
 
 export default class Component extends Container<any, any> {
@@ -27,15 +20,15 @@ export default class Component extends Container<any, any> {
     return this
   }
 
-  public get component(): object {
+  public get $(): object {
     if(!this.allow) return null
     this.allow = false
 
-    const context = this.componentContext
-    const contextName = this.componentContextName
-    const props = this.componentProps
-    const data = this.componentData(context, contextName)
-    const render = this.componentRender(context, contextName)
+    const context = this.$context
+    const contextName = this.$contextName
+    const props = this.$props
+    const data = this.$data(context, contextName)
+    const render = this.$render(context, contextName)
 
     const r = {}
     if(!is.un(props)) r['props'] = props
@@ -46,15 +39,15 @@ export default class Component extends Container<any, any> {
     return r
   }
 
-  protected get componentContext(): any {
+  protected get $context(): any {
     const context = this.container.take('context')
     return to.obj(context)
   }
-  protected get componentContextName(): any {
+  protected get $contextName(): any {
     const contextName = this.container.take('contextName')
     return to.obj(contextName)
   }
-  protected get componentProps(): object {
+  protected get $props(): object {
     const props = this.container.take('props')
     if(!to.bool(props)) return null
     const r = {}
@@ -96,17 +89,17 @@ export default class Component extends Container<any, any> {
     }
     return r
   }
-  protected componentData(context?: any, contextName?: string): Function {
+  protected $data(context?: any, contextName?: string): Function {
     const obj = this.container.take('data')
     return Component.funcData(obj, context, contextName)
   }
-  protected componentRender(context?: any, contextName?: string): Function {
+  protected $render(context?: any, contextName?: string): Function {
     const obj = this.container.take('render')
     return Component.funcRender(obj, context, contextName)
   }
-  
-  public $(...args: any[]): Component {
-    return <any> super.$(...args)
+
+  public decor(...args: any[]): Component {
+    return <any> super.decor(...args)
   }
 
   protected static regData(obj: any): boolean {
@@ -131,7 +124,7 @@ export default class Component extends Container<any, any> {
     return Code.new({
       template: `(function(){return @})`,
       codes: [obj]
-    }).code
+    }).$
   }
 
   protected static regRender(obj: any): boolean {
@@ -156,6 +149,6 @@ export default class Component extends Container<any, any> {
     return Code.new({
       template: `(function(h){return @})`,
       codes: [obj]
-    }).code
+    }).$
   }
 }

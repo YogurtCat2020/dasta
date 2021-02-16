@@ -1,35 +1,43 @@
-
-const _path = require('path')
-const _dir = __dirname
-const path = str => _path.resolve(_dir, str)
-
-const config = require(path('config.js'))
-
-webpack = require('webpack')
-TerserPlugin = require('terser-webpack-plugin')
-
-const webpackConfig = require(path('webpackConfig.js'))
+const webpack = require('webpack')
+const TerserPlugin = require('terser-webpack-plugin')
+const {path, configWebpack} = require('../util')
+const config = {
+  author: 'YogurtCat',
+  date: '2020-',
+  name: 'dasta',
+  version: '1.1.0',
+  repository: {
+    git: 'https://github.com/YogurtCat2020/dasta'
+  }
+}
 
 
 module.exports = [
-  webpackConfig({
-    path,
+  configWebpack({
+    path: path(__dirname),
     config,
     webpack,
     TerserPlugin,
     entry: 'src/index.ts',
     filename: 'index.js',
+    libraryTarget: 'commonjs2',
     min: false,
-    externals: config.externals
+    externals: {
+      '@yogurtcat/lib': 'commonjs2 @yogurtcat/lib'
+    }
   }),
-  webpackConfig({
-    path,
+  configWebpack({
+    path: path(__dirname),
     config,
     webpack,
     TerserPlugin,
-    entry: 'src/index.min.ts',
+    entry: 'src/index.ts',
     filename: 'index.min.js',
+    libraryTarget: 'global',
+    library: 'dasta',
     min: true,
-    externals: config.externalsMin
+    externals: {
+      '@yogurtcat/lib': 'global $yogurtcat$lib'
+    }
   })
 ]

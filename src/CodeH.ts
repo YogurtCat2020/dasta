@@ -1,7 +1,4 @@
-import {base, code} from '@yogurtcat/lib'
-
-const {is, sugar} = base
-const {Code} = code
+import {is, sugar, Code} from '@yogurtcat/lib'
 
 
 export default class CodeH extends Code {
@@ -29,9 +26,8 @@ export default class CodeH extends Code {
       template: `h(${t.join(', ')})`,
       codes: c,
       ...rem
-    }).code)
+    }).$)
   }
 }
-
 
 Code.extension.set('H', x => new CodeH(x))

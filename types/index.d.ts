@@ -1,2 +1,3 @@
-export { default as CodeH } from './CodeH';
-export { default as Component } from './Component';
+import CodeH from './CodeH';
+import Component from './Component';
+export { CodeH, Component };

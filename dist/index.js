@@ -1,20 +1,11 @@
 /*!
- * dasta.js v1.0.30
+ * dasta.js v1.1.0
  * (c) 2020- YogurtCat
  * git: https://github.com/YogurtCat2020/dasta
  * Released under the MIT License.
  */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
-})(self, function() {
-return /******/ (() => { // webpackBootstrap
+module.exports =
+/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
@@ -22,47 +13,38 @@ return /******/ (() => { // webpackBootstrap
 /*!**********************!*\
   !*** ./src/CodeH.ts ***!
   \**********************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const lib_1 = __webpack_require__(/*! @yogurtcat/lib */ "@yogurtcat/lib");
-const { is, sugar } = lib_1.base;
-const { Code } = lib_1.code;
-class CodeH extends Code {
+class CodeH extends lib_1.Code {
     constructor(args) {
-        const _a = sugar(args, {
+        const { template, T, codes, name, N, attrs, A, children, C, ...rem } = lib_1.sugar(args, {
             template: 'T',
             name: 'N',
             attrs: 'A',
             children: 'C'
-        }), { template, T, codes, name, N, attrs, A, children, C } = _a, rem = __rest(_a, ["template", "T", "codes", "name", "N", "attrs", "A", "children", "C"]);
+        });
         const t = [`@`];
         const c = [name];
-        if (!is.un(attrs)) {
+        if (!lib_1.is.un(attrs)) {
             t.push(`@`);
             c.push(attrs);
         }
-        if (!is.un(children)) {
+        if (!lib_1.is.un(children)) {
             t.push(`@`);
             c.push(children);
         }
-        super(Code.new(Object.assign({ template: `h(${t.join(', ')})`, codes: c }, rem)).code);
+        super(lib_1.Code.new({
+            template: `h(${t.join(', ')})`,
+            codes: c,
+            ...rem
+        }).$);
     }
 }
 exports.default = CodeH;
-Code.extension.set('H', x => new CodeH(x));
+lib_1.Code.extension.set('H', x => new CodeH(x));
 
 
 /***/ }),
@@ -76,13 +58,10 @@ Code.extension.set('H', x => new CodeH(x));
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const lib_1 = __webpack_require__(/*! @yogurtcat/lib */ "@yogurtcat/lib");
-const { is, to } = lib_1.base;
-const { Container, Mass } = lib_1.container;
-const { Code } = lib_1.code;
-class Component extends Container {
+class Component extends lib_1.Container {
     constructor(args) {
         super();
-        this.container = Mass.new(args);
+        this.container = lib_1.Mass.new(args);
         this.allow = true;
     }
     relocate(key) {
@@ -92,43 +71,43 @@ class Component extends Container {
         this.container.merge(args);
         return this;
     }
-    get component() {
+    get $() {
         if (!this.allow)
             return null;
         this.allow = false;
-        const context = this.componentContext;
-        const contextName = this.componentContextName;
-        const props = this.componentProps;
-        const data = this.componentData(context, contextName);
-        const render = this.componentRender(context, contextName);
+        const context = this.$context;
+        const contextName = this.$contextName;
+        const props = this.$props;
+        const data = this.$data(context, contextName);
+        const render = this.$render(context, contextName);
         const r = {};
-        if (!is.un(props))
+        if (!lib_1.is.un(props))
             r['props'] = props;
-        if (!is.un(data))
+        if (!lib_1.is.un(data))
             r['data'] = data;
         for (let [k, v] of this.container)
-            if (to.bool(v))
-                r[k] = to.obj(v);
-        if (!is.un(render))
+            if (lib_1.to.bool(v))
+                r[k] = lib_1.to.obj(v);
+        if (!lib_1.is.un(render))
             r['render'] = render;
         return r;
     }
-    get componentContext() {
+    get $context() {
         const context = this.container.take('context');
-        return to.obj(context);
+        return lib_1.to.obj(context);
     }
-    get componentContextName() {
+    get $contextName() {
         const contextName = this.container.take('contextName');
-        return to.obj(contextName);
+        return lib_1.to.obj(contextName);
     }
-    get componentProps() {
+    get $props() {
         const props = this.container.take('props');
-        if (!to.bool(props))
+        if (!lib_1.to.bool(props))
             return null;
         const r = {};
         for (let [k, v] of props) {
-            v = to.obj(v);
-            if (!is.arr(v))
+            v = lib_1.to.obj(v);
+            if (!lib_1.is.arr(v))
                 v = [v];
             if (v.length <= 0)
                 v = {
@@ -137,14 +116,14 @@ class Component extends Container {
                 };
             else if (v.length == 1) {
                 const [v0] = v;
-                if (is.type(v0))
+                if (lib_1.is.type(v0))
                     v = {
                         type: v0,
                         required: true,
                     };
                 else
                     v = {
-                        type: to.type(v0),
+                        type: lib_1.to.type(v0),
                         default: v0,
                     };
             }
@@ -172,30 +151,30 @@ class Component extends Container {
         }
         return r;
     }
-    componentData(context, contextName) {
+    $data(context, contextName) {
         const obj = this.container.take('data');
         return Component.funcData(obj, context, contextName);
     }
-    componentRender(context, contextName) {
+    $render(context, contextName) {
         const obj = this.container.take('render');
         return Component.funcRender(obj, context, contextName);
     }
-    $(...args) {
-        return super.$(...args);
+    decor(...args) {
+        return super.decor(...args);
     }
     static regData(obj) {
-        obj = to.obj(obj);
-        if (!to.bool(obj))
+        obj = lib_1.to.obj(obj);
+        if (!lib_1.to.bool(obj))
             return null;
         if (!['init', 'I', 'opr', 'O']
-            .map(i => to.bool(obj[i]))
+            .map(i => lib_1.to.bool(obj[i]))
             .reduce((s, c) => s || c, false))
             return null;
         return obj;
     }
     static funcData(obj, context, contextName) {
         obj = this.regData(obj);
-        if (is.un(obj))
+        if (lib_1.is.un(obj))
             return null;
         return lib_1.evaluate({
             template: `(function(){return @})`,
@@ -204,26 +183,26 @@ class Component extends Container {
     }
     static codeData(obj) {
         obj = this.regData(obj);
-        if (is.un(obj))
+        if (lib_1.is.un(obj))
             return null;
-        return Code.new({
+        return lib_1.Code.new({
             template: `(function(){return @})`,
             codes: [obj]
-        }).code;
+        }).$;
     }
     static regRender(obj) {
-        obj = to.obj(obj);
-        if (!to.bool(obj))
+        obj = lib_1.to.obj(obj);
+        if (!lib_1.to.bool(obj))
             return null;
         if (!['name', 'N']
-            .map(i => to.bool(obj[i]))
+            .map(i => lib_1.to.bool(obj[i]))
             .reduce((s, c) => s || c, false))
             return null;
         return obj;
     }
     static funcRender(obj, context, contextName) {
         obj = this.regRender(obj);
-        if (is.un(obj))
+        if (lib_1.is.un(obj))
             return null;
         return lib_1.evaluate({
             template: `(function(h){return @})`,
@@ -232,12 +211,12 @@ class Component extends Container {
     }
     static codeRender(obj) {
         obj = this.regRender(obj);
-        if (is.un(obj))
+        if (lib_1.is.un(obj))
             return null;
-        return Code.new({
+        return lib_1.Code.new({
             template: `(function(h){return @})`,
             codes: [obj]
-        }).code;
+        }).$;
     }
 }
 exports.default = Component;
@@ -254,10 +233,10 @@ exports.default = Component;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Component = exports.CodeH = void 0;
-var CodeH_1 = __webpack_require__(/*! ./CodeH */ "./src/CodeH.ts");
-Object.defineProperty(exports, "CodeH", ({ enumerable: true, get: function () { return CodeH_1.default; } }));
-var Component_1 = __webpack_require__(/*! ./Component */ "./src/Component.ts");
-Object.defineProperty(exports, "Component", ({ enumerable: true, get: function () { return Component_1.default; } }));
+const CodeH_1 = __webpack_require__(/*! ./CodeH */ "./src/CodeH.ts");
+exports.CodeH = CodeH_1.default;
+const Component_1 = __webpack_require__(/*! ./Component */ "./src/Component.ts");
+exports.Component = Component_1.default;
 
 
 /***/ }),
@@ -291,7 +270,7 @@ module.exports = require("@yogurtcat/lib");;
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -304,4 +283,3 @@ module.exports = require("@yogurtcat/lib");;
 /******/ 	return __webpack_require__("./src/index.ts");
 /******/ })()
 ;
-});
