@@ -1,5 +1,5 @@
 /*!
- * dasta.js v1.1.0
+ * dasta.js
  * (c) 2020- YogurtCat
  * git: https://github.com/YogurtCat2020/dasta
  * Released under the MIT License.

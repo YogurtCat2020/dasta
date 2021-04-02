@@ -5,7 +5,6 @@ const config = {
   author: 'YogurtCat',
   date: '2020-',
   name: 'dasta',
-  version: '1.1.0',
   repository: {
     git: 'https://github.com/YogurtCat2020/dasta'
   }
